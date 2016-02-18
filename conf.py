@@ -14,6 +14,7 @@
 import sys
 import os
 import datetime
+import pylons_sphinx_themes
 
 from docutils import nodes
 from docutils import utils
@@ -32,15 +33,15 @@ from docutils import utils
 
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx'
+    'sphinx.ext.intersphinx',
 ]
 
 intersphinx_mapping = {
+    'cookbook': ('http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/', None),
     'python': ('http://docs.python.org', None),
     'python3': ('http://docs.python.org/3', None),
-    'pyramid':
-        ('http://docs.pylonsproject.org/projects/pyramid/en/latest/',
-         None)
+    'pyramid': ('http://docs.pylonsproject.org/projects/pyramid/en/latest/',
+                None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -81,7 +82,7 @@ release = '0.1'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', 'env2*', 'env3*']
+exclude_patterns = ['_build', 'env2*', 'env3*', '_themes/README.rst', 'contributing.md']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
@@ -106,28 +107,12 @@ exclude_patterns = ['_build', 'env2*', 'env3*']
 
 # -- Options for HTML output ---------------------------------------------------
 
-# Add and use Pylons theme
-from subprocess import call, Popen, PIPE
-
-p = Popen('which git', shell=True, stdout=PIPE)
-git = p.stdout.read().strip()
-cwd = os.getcwd()
-_themes = os.path.join(cwd, '_themes')
-
-if not os.path.isdir(_themes):
-    call([git, 'clone', 'git://github.com/Pylons/pylons_sphinx_theme.git',
-          '_themes'])
-else:
-    os.chdir(_themes)
-    call([git, 'checkout', 'master'])
-    call([git, 'pull'])
-    os.chdir(cwd)
-
-sys.path.append(os.path.abspath('_themes'))
-html_theme_path = ['_themes']
+# Add and use pylons_sphinx_themes
 html_theme = 'pyramid'
+html_theme_path = pylons_sphinx_themes.get_html_themes_path()
 html_theme_options = dict(
-    github_url='https://github.com/Pylons/pyramid_tutorials'
+    github_url='https://github.com/Pylons/pyramid_tutorials',
+    canonical_url='http://docs.pylonsproject.org/projects/pyramid-tutorials/en/latest/'
 )
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -169,7 +154,7 @@ html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
-#html_use_smartypants = True
+html_use_smartypants = False # people use cutnpaste in some places
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}

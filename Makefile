@@ -2,7 +2,7 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
+SPHINXOPTS    = -W
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
@@ -61,7 +61,7 @@ json:
 	@echo
 	@echo "Build finished; now you can process the JSON files."
 
-htmlhelp: _themes
+htmlhelp:
 	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) $(BUILDDIR)/htmlhelp
 	@echo
 	@echo "Build finished; now you can run HTML Help Workshop with the" \

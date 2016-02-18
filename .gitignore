@@ -1,4 +1,3 @@
-_themes
 _build
 allnose.sh
 env*/
@@ -7,3 +6,5 @@ env*/
 *.pyc
 sqltutorial.sqlite
 tmp
+Data.*
+.idea
